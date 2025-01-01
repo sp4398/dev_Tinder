@@ -1,18 +1,15 @@
-const express=require("express")
+const express = require("express");
+const connect = require("./config/database");
 
-const app=express();
+const app = express();
 
-app.use("/test",(req,res)=>{
-    res.send("Hello from the server")
-})
-
-app.use("/",(req,res)=>{
-    res.send("Hello !");
-})
-
-
-
-app.listen(7777,()=>{
-    console.log("server is running on 7777...");
-    
-})
+connect()
+  .then(() => {
+    console.log("Database connected successfully");
+    app.listen(7777, () => {
+      console.log("server is running on 7777...");
+    });
+  })
+  .catch((err) => {
+    console.error("Database connection failed");
+  });
